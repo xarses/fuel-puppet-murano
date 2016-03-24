@@ -224,6 +224,7 @@ class murano(
     'DEFAULT/notification_driver'           : value => $notification_driver;
 
     'murano/url'                            : value => "http://${service_host}:${service_port}";
+    'murano/os_region_name'                 : value => $region;
 
     'database/connection'                   : value => $database_connection;
 
