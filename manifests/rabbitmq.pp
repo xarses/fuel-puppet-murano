@@ -48,14 +48,7 @@ class murano::rabbitmq(
 ) {
 
   include ::rabbitmq::params
-
-  ensure_packages([$rabbitmq::params::package_name],
-    {
-      ensure   => $rabbitmq::params::package_ensure,
-      provider => $rabbitmq::params::package_provider,
-      before   => File['rabbitmq_config'],
-    }
-  )
+  include ::rabbitmq::install
 
   file { 'rabbitmq_config' :
     path    => $rabbit_config_path,
@@ -63,6 +56,7 @@ class murano::rabbitmq(
     group   => 'root',
     mode    => '0644',
     content => template('murano/rabbitmq.config.erb'),
+    require => Class['::rabbitmq::install'],
   }
 
   file { 'init_script' :
